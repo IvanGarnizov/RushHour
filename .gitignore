@@ -1,0 +1,8 @@
+.vs
+packages
+RushHour.Entities/bin
+RushHour.Entities/obj
+RushHour.Data/obj
+RushHour.Data/bin
+RushHour.App/bin
+RushHour.App/obj
