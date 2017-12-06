@@ -58,6 +58,19 @@ namespace RushHour.App.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeNameViewModel
+    {
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+    }
+
+    public class ChangePhoneViewModel
+    {
+        [Display(Name = "Phone")]
+        public string Phone { get; set; }
+    }
+
     public class AddPhoneNumberViewModel
     {
         [Required]

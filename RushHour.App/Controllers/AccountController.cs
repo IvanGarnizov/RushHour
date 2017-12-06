@@ -5,25 +5,30 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RushHour.App.Models;
+using RushHour.App.Models.ViewModels;
+using RushHour.Data.UnitOfWork;
 using RushHour.Entities;
 
 namespace RushHour.App.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
+        public AccountController(IRushHourData data)
+            : base(data)
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IRushHourData data)
+            : base(data)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -76,7 +81,7 @@ namespace RushHour.App.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Name, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -152,7 +157,7 @@ namespace RushHour.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Name, Email = model.Email, PhoneNumber = model.Phone };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -422,6 +427,16 @@ namespace RushHour.App.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        public new ActionResult Profile()
+        {
+            string userId = User.Identity.GetUserId();
+            var user = data.Users.All()
+                .First(u => u.Id == userId);
+            var userModel = Mapper.Map<User, UserViewModel>(user);
+
+            return View(userModel);
         }
 
         #region Helpers

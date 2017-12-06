@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace RushHour.App.Controllers
+﻿namespace RushHour.App.Controllers
 {
-    public class HomeController : Controller
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
+    using AutoMapper;
+
+    using Data.UnitOfWork;
+
+    using Entities;
+
+    using Models.ViewModels;
+
+    public class HomeController : BaseController
     {
+        public HomeController(IRushHourData data)
+            : base(data)
+        {
+        }
+
         public ActionResult Index()
         {
-            return View();
-        }
+            var appointments = data.Appointments.All();
+            var appointmentModels = Mapper.Map<IEnumerable<Appointment>, IEnumerable<AppointmentViewModel>>(appointments);
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(appointmentModels);
         }
     }
 }

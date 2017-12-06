@@ -1,0 +1,23 @@
+﻿@using RushHour.App.Models.ViewModels
+@model UserViewModel
+
+<h2>Profile</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>[@Html.ActionLink("Change your password", "ChangePassword", "Manage")]</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Name:</dt>
+        <dd>@Model.Name [@Html.ActionLink("Change your name", "ChangeName", "Manage")]</dd>
+    </dl>
+    @if (Model.Phone != null)
+    {
+        <dl class="dl-horizontal">
+            <dt>Phone:</dt>
+            <dd>@Model.Phone [@Html.ActionLink("Change your phone", "ChangePhone", "Manage")]</dd>
+        </dl>
+    }
+</div>

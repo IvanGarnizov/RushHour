@@ -15,6 +15,7 @@ namespace RushHour.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(RushHourContext context)
