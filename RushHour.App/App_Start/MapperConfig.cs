@@ -16,6 +16,7 @@
                 cfg.CreateMap<User, UserViewModel>()
                     .ForMember("Name", opt => opt.MapFrom(u => u.UserName))
                     .ForMember("Phone", opt => opt.MapFrom(u => u.PhoneNumber));
+                cfg.CreateMap<Activity, ActivityViewModel>();
             });
         }
     }

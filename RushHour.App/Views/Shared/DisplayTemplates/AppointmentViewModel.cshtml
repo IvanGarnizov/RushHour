@@ -1,0 +1,12 @@
+﻿@using  RushHour.App.Models.ViewModels
+@model AppointmentViewModel
+
+<div class="appointment">
+    <div>Starts: @Html.DisplayFor(m => m.StartDateTime)</div>
+    <div>Ends: @Html.DisplayFor(m => m.EndDateTime)</div>
+    <h3>Activities</h3>
+    @Html.DisplayFor(m => m.Activities)
+    <a class="btn btn-warning">Edit</a>
+    <a class="btn btn-danger">Delete</a>
+    <a class="btn btn-primary">Cancel</a>
+</div>

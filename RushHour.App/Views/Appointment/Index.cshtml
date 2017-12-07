@@ -1,0 +1,8 @@
+﻿@using RushHour.App.Models.ViewModels
+@model IEnumerable<AppointmentViewModel>
+    
+<h2>Appointments</h2>
+
+@Html.DisplayFor(m => m)
+<br />
+@Html.ActionLink("Create", "Create", "Appointment")

@@ -22,3 +22,19 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.appointment {
+    display: inline-block;
+    margin-right: 50px;
+}
+
+.activity {
+    border: 1px solid black;
+    border-radius: 30px;
+    padding: 10px 10px 0 0;
+    margin-bottom: 10px;
+}
+
+a {
+    margin: 0 auto;
+}

@@ -7,17 +7,25 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>Password:</dt>
-        <dd>[@Html.ActionLink("Change your password", "ChangePassword", "Manage")]</dd>
+        <dd>[ @Html.ActionLink("Change your password", "ChangePassword", "Manage") ]</dd>
     </dl>
     <dl class="dl-horizontal">
         <dt>Name:</dt>
-        <dd>@Model.Name [@Html.ActionLink("Change your name", "ChangeName", "Manage")]</dd>
+        <dd>@Model.Name [ @Html.ActionLink("Change your name", "ChangeName", "Manage") ]</dd>
     </dl>
     @if (Model.Phone != null)
     {
         <dl class="dl-horizontal">
             <dt>Phone:</dt>
-            <dd>@Model.Phone [@Html.ActionLink("Change your phone", "ChangePhone", "Manage")]</dd>
+            <dd>@Model.Phone [ @Html.ActionLink("Change your phone", "ChangePhone", "Manage") ]</dd>
+        </dl>
+    }
+    else
+    {
+        <dl class="dl-horizontal">
+            <dt>Add Phone:</dt>
+            <dd>[ @Html.ActionLink("Add phone", "ChangePhone", "Manage") ]</dd>
+            <dd></dd>
         </dl>
     }
 </div>

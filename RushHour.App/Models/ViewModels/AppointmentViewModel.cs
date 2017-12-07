@@ -1,6 +1,7 @@
 ﻿namespace RushHour.App.Models.ViewModels
 {
     using System;
+    using System.Collections.Generic;
 
     public class AppointmentViewModel
     {
@@ -9,5 +10,7 @@
         public DateTime StartDateTime { get; set; }
 
         public DateTime EndDateTime { get; set; }
+
+        public IEnumerable<ActivityViewModel> Activities { get; set; }
     }
 }
