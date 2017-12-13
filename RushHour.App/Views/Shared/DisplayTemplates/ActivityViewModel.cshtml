@@ -2,12 +2,15 @@
 @model ActivityViewModel
 
 <div class="activity">
-    <dl class="dl-horizontal">
-        <dt>Name:</dt>
-        <dd>@Model.Name</dd>
-        <dt>Duration:</dt>
-        <dd>@Model.Duration minutes</dd>
-        <dt>Price:</dt>
-        <dd>$@Model.Price</dd>
-    </dl>
+    <label>Name:</label>
+    <span>@Model.Name</span>
+    <br />
+    <label>Duration:</label>
+    <span>@Model.Duration minutes</span>
+    <br />
+    <label>Price:</label>
+    <span>$@Model.Price</span>
+    <hr />
+    @Html.ActionLink("Edit", "Edit", "Activity", new { id = Model.Id }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Delete", "Delete", "Activity", new { id = Model.Id }, new { @class = "btn btn-danger" })
 </div>

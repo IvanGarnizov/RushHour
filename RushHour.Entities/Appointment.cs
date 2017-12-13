@@ -17,6 +17,8 @@
 
         public DateTime EndDateTime { get; set; }
 
+        public bool IsCancelled { get; set; }
+
         [Required]
         public string UserId { get; set; }
 

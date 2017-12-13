@@ -11,6 +11,10 @@
 
         public DateTime EndDateTime { get; set; }
 
+        public bool IsCancelled { get; set; }
+
+        public string UserId { get; set; }
+
         public IEnumerable<ActivityViewModel> Activities { get; set; }
     }
 }

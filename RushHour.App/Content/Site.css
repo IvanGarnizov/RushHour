@@ -38,3 +38,15 @@ textarea {
 a {
     margin: 0 auto;
 }
+
+.activity label {
+    margin-left: 20px;
+}
+
+.activity a:first-of-type {
+    margin-left: 10px;
+}
+
+.activity a {
+    margin-bottom: 10px;
+}

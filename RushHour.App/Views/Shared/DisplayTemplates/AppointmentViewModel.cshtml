@@ -4,9 +4,19 @@
 <div class="appointment">
     <div>Starts: @Html.DisplayFor(m => m.StartDateTime)</div>
     <div>Ends: @Html.DisplayFor(m => m.EndDateTime)</div>
+    @if (Model.IsCancelled)
+    {
+        <p>Cancelled</p>
+    }
     <h3>Activities</h3>
+    @if (Model.Activities.Count() == 0)
+    {
+        <p>No activities</p>
+    }
     @Html.DisplayFor(m => m.Activities)
-    <a class="btn btn-warning">Edit</a>
-    <a class="btn btn-danger">Delete</a>
-    <a class="btn btn-primary">Cancel</a>
+    @Html.ActionLink("Create Activity", "Create", "Activity", new { id = Model.Id }, new { @class = "btn btn-success" })
+    <hr />
+    @Html.ActionLink("Edit", "Edit", "Appointment", new { id = Model.Id }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Delete", "Delete", "Appointment", new { id = Model.Id }, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Cancel", "Cancel", "Appointment", new { id = Model.Id }, new { @class = "btn btn-default" })
 </div>

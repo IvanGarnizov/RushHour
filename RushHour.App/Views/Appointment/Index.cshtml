@@ -2,7 +2,13 @@
 @model IEnumerable<AppointmentViewModel>
     
 <h2>Appointments</h2>
-
-@Html.DisplayFor(m => m)
-<br />
-@Html.ActionLink("Create", "Create", "Appointment")
+@if (Model.Count() == 0)
+{
+    <p>No appointments</p>
+}
+else
+{
+    @Html.DisplayFor(m => m)
+}
+<hr />
+@Html.ActionLink("Create Appointment", "Create", "Appointment", null, new { @class = "btn btn-success" })
