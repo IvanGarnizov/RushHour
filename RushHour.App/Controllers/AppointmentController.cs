@@ -15,31 +15,35 @@
     using Models.BindingModels;
     using Models.ViewModels;
 
+    [Authorize]
     public class AppointmentController : BaseController
     {
         public AppointmentController(IRushHourData data)
             : base(data)
         {
         }
-
-        [Authorize]
+        
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            var appointments = data.Appointments.All()
-                .Where(a => a.UserId == userId);
+            var appointments = data.Appointments.All();
+
+            if (!User.IsInRole("Admin"))
+            {
+                appointments = appointments
+                    .Where(a => a.UserId == userId);
+            }
+
             var appointmentModels = Mapper.Map<IEnumerable<Appointment>, IEnumerable<AppointmentViewModel>>(appointments);
             
             return View(appointmentModels);
         }
-
-        [Authorize]
+        
         public ActionResult Create()
         {
             return View();
         }
 
-        [Authorize]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Create(AppointmentBindingModel model)
@@ -62,16 +66,14 @@
 
             return RedirectToAction("Index");
         }
-
-        [Authorize]
+        
         public ActionResult Edit(int id)
         {
             ViewBag.Id = id;
 
             return View();
         }
-
-        [Authorize]
+        
         [ValidateAntiForgeryToken]
         [HttpPut]
         public ActionResult Edit(AppointmentBindingModel model, int id)
@@ -92,8 +94,7 @@
 
             return RedirectToAction("Index");
         }
-
-        [Authorize]
+        
         public ActionResult Delete(int id)
         {
             var appointment = data.Appointments.All()

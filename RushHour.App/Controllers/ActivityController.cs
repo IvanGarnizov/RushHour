@@ -9,22 +9,21 @@
 
     using Models.BindingModels;
 
+    [Authorize]
     public class ActivityController : BaseController
     {
         public ActivityController(IRushHourData data)
             : base(data)
         {
         }
-
-        [Authorize]
+        
         public ActionResult Create(int id)
         {
             ViewBag.AppointmentId = id;
 
             return View();
         }
-
-        [Authorize]
+        
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Create(ActivityBindingModel model, int id)
@@ -50,16 +49,14 @@
 
             return RedirectToAction("Index", "Appointment");
         }
-
-        [Authorize]
+        
         public ActionResult Edit(int id)
         {
             ViewBag.Id = id;
 
             return View();
         }
-
-        [Authorize]
+        
         [ValidateAntiForgeryToken]
         [HttpPut]
         public ActionResult Edit(ActivityBindingModel model, int id)
@@ -81,7 +78,16 @@
 
             return RedirectToAction("Index", "Appointment");
         }
+        
+        public ActionResult Delete(int id)
+        {
+            var activity = data.Activities.All()
+                .First(a => a.Id == id);
 
+            data.Activities.Remove(activity);
+            data.SaveChanges();
 
+            return RedirectToAction("Index", "Appointment");
+        }
     }
 }

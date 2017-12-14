@@ -1,4 +1,5 @@
-﻿@using  RushHour.App.Models.ViewModels
+﻿@using RushHour.App.Models.ViewModels
+@using Microsoft.AspNet.Identity
 @model AppointmentViewModel
 
 <div class="appointment">
@@ -15,8 +16,11 @@
     }
     @Html.DisplayFor(m => m.Activities)
     @Html.ActionLink("Create Activity", "Create", "Activity", new { id = Model.Id }, new { @class = "btn btn-success" })
-    <hr />
-    @Html.ActionLink("Edit", "Edit", "Appointment", new { id = Model.Id }, new { @class = "btn btn-warning" })
-    @Html.ActionLink("Delete", "Delete", "Appointment", new { id = Model.Id }, new { @class = "btn btn-danger" })
-    @Html.ActionLink("Cancel", "Cancel", "Appointment", new { id = Model.Id }, new { @class = "btn btn-default" })
+    @if (Model.UserId == User.Identity.GetUserId())
+    {
+        <hr />
+        @Html.ActionLink("Edit", "Edit", "Appointment", new { id = Model.Id }, new { @class = "btn btn-warning" })
+        @Html.ActionLink("Delete", "Delete", "Appointment", new { id = Model.Id }, new { @class = "btn btn-danger" })
+        @Html.ActionLink("Cancel", "Cancel", "Appointment", new { id = Model.Id }, new { @class = "btn btn-default" })
+    }
 </div>

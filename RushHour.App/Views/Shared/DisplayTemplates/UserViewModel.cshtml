@@ -1,0 +1,8 @@
+﻿@using RushHour.App.Models.ViewModels
+@model UserViewModel
+
+<div class="user">
+    @Model.Name
+    @Html.ActionLink("Edit", "Edit", "User", new { id = Model.Id }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Delete", "Delete", "User", new { id = Model.Id }, new { @class = "btn btn-danger" })
+</div>
