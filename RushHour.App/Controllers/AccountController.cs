@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RushHour.App.Models;
 using RushHour.App.Models.ViewModels;
+using RushHour.Data;
 using RushHour.Data.UnitOfWork;
 using RushHour.Entities;
 
@@ -22,13 +23,13 @@ namespace RushHour.App.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController(IRushHourData data)
-            : base(data)
+        public AccountController(RushHourContext context)
+            : base(context)
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IRushHourData data)
-            : base(data)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, RushHourContext context)
+            : base(context)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -432,8 +433,7 @@ namespace RushHour.App.Controllers
         public new ActionResult Profile()
         {
             string userId = User.Identity.GetUserId();
-            var user = data.Users.All()
-                .First(u => u.Id == userId);
+            var user = userService.Get(userId);
             var userModel = Mapper.Map<User, UserViewModel>(user);
 
             return View(userModel);

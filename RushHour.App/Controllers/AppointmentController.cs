@@ -1,12 +1,14 @@
 ﻿namespace RushHour.App.Controllers
 {
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
 
     using AutoMapper;
 
-    using Data.UnitOfWork;
+    using Data;
+    using Data.Repositories;
 
     using Entities;
 
@@ -15,18 +17,20 @@
     using Models.BindingModels;
     using Models.ViewModels;
 
+    using Services;
+
     [Authorize]
     public class AppointmentController : BaseController
     {
-        public AppointmentController(IRushHourData data)
-            : base(data)
+        public AppointmentController(RushHourContext context)
+            : base(context)
         {
         }
         
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            var appointments = data.Appointments.All();
+            var appointments = appointmentService.Appointments();
 
             if (!User.IsInRole("Admin"))
             {
@@ -54,15 +58,8 @@
             }
 
             string userId = User.Identity.GetUserId();
-            var appointment = new Appointment()
-            {
-                StartDateTime = model.StartDateTime,
-                EndDateTime = model.EndDateTime,
-                UserId = userId
-            };
 
-            data.Appointments.Add(appointment);
-            data.SaveChanges();
+            appointmentService.Create(model, userId);
 
             return RedirectToAction("Index");
         }
@@ -85,34 +82,21 @@
                 return View();
             }
 
-            var appointment = data.Appointments.All()
-                .First(a => a.Id == id); 
-
-            appointment.StartDateTime = model.StartDateTime;
-            appointment.EndDateTime = model.EndDateTime;
-            data.SaveChanges();
+            appointmentService.Update(model, id);
 
             return RedirectToAction("Index");
         }
         
         public ActionResult Delete(int id)
         {
-            var appointment = data.Appointments.All()
-                .First(a => a.Id == id);
-
-            data.Appointments.Remove(appointment);
-            data.SaveChanges();
+            appointmentService.Delete(id);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Cancel(int id)
         {
-            var appointment = data.Appointments.All()
-                .First(a => a.Id == id);
-
-            appointment.IsCancelled = true;
-            data.SaveChanges();
+            appointmentService.Cancel(id);
 
             return RedirectToAction("Index");
         }

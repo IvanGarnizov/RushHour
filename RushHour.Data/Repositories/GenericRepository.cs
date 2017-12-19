@@ -73,9 +73,6 @@
             }
 
             entry.State = state;
-            {
-
-            }
         }
     }
 }

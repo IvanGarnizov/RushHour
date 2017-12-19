@@ -2,12 +2,12 @@
 {
     using System.Web.Mvc;
 
-    using Data.UnitOfWork;
+    using Data;
     
     public class HomeController : BaseController
     {
-        public HomeController(IRushHourData data)
-            : base(data)
+        public HomeController(RushHourContext context)
+            : base(context)
         {
         }
 

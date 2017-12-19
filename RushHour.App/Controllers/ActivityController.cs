@@ -3,17 +3,20 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    using Data.UnitOfWork;
+    using Data;
+    using Data.Repositories;
 
     using Entities;
 
     using Models.BindingModels;
 
+    using Services;
+
     [Authorize]
     public class ActivityController : BaseController
     {
-        public ActivityController(IRushHourData data)
-            : base(data)
+        public ActivityController(RushHourContext context)
+            : base(context)
         {
         }
         
@@ -26,26 +29,18 @@
         
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create(ActivityBindingModel model, int id)
+        public ActionResult Create(ActivityBindingModel model, int appointmentId)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.AppointmentId = id;
+                ViewBag.AppointmentId = appointmentId;
 
                 return View();
             }
 
-            var appointment = data.Appointments.All()
-                .First(a => a.Id == id);
-            var activity = new Activity()
-            {
-                Name = model.Name,
-                Duration = model.Duration,
-                Price = model.Price
-            };
+            var appointment = appointmentService.Get(appointmentId);
 
-            appointment.Activities.Add(activity);
-            data.SaveChanges();
+            activityService.Create(model, appointment);
 
             return RedirectToAction("Index", "Appointment");
         }
@@ -68,24 +63,14 @@
                 return View();
             }
 
-            var activity = data.Activities.All()
-                .First(a => a.Id == id);
-
-            activity.Name = model.Name;
-            activity.Duration = model.Duration;
-            activity.Price = model.Price;
-            data.SaveChanges();
+            activityService.Update(model, id);
 
             return RedirectToAction("Index", "Appointment");
         }
         
         public ActionResult Delete(int id)
         {
-            var activity = data.Activities.All()
-                .First(a => a.Id == id);
-
-            data.Activities.Remove(activity);
-            data.SaveChanges();
+            activityService.Delete(id);
 
             return RedirectToAction("Index", "Appointment");
         }

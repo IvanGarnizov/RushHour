@@ -6,7 +6,7 @@
 
     using AutoMapper;
 
-    using Data.UnitOfWork;
+    using Data;
 
     using Entities;
 
@@ -16,14 +16,14 @@
     [Authorize(Roles = "Admin")]
     public class UserController : BaseController
     {
-        public UserController(IRushHourData data)
-            : base(data)
+        public UserController(RushHourContext context)
+            : base(context)
         {
         }
 
         public ActionResult Index()
         {
-            var users = data.Users.All();
+            var users = userService.Users();
             var userModels = Mapper.Map<IEnumerable<User>, IEnumerable<UserViewModel>>(users);
 
             return View(userModels);
@@ -47,22 +47,14 @@
                 return View();
             }
 
-            var user = data.Users.All()
-                .First(u => u.Id == id);
-
-            user.UserName = model.Name;
-            data.SaveChanges();
+            userService.Update(model, id);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(string id)
         {
-            var user = data.Users.All()
-                .First(u => u.Id == id);
-
-            data.Users.Remove(user);
-            data.SaveChanges();
+            userService.Delete(id);
 
             return RedirectToAction("Index");
         }
