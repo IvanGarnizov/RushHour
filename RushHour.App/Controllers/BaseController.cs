@@ -2,24 +2,21 @@
 {
     using System.Web.Mvc;
 
-    using Data;
-    using Data.Repositories;
-
     using Entities;
 
     using Services;
 
     public class BaseController : Controller
     {
-        protected AppointmentService appointmentService;
-        protected ActivityService activityService;
-        protected UserService userService;
+        protected IAppointmentService appointmentService;
+        protected IService<Activity> activityService;
+        protected IService<User> userService;
 
-        public BaseController(RushHourContext context)
+        public BaseController(IAppointmentService appointmentService, IService<Activity> activityService, IService<User> userService)
         {
-            appointmentService = new AppointmentService(new GenericRepository<Appointment>(context));
-            activityService = new ActivityService(new GenericRepository<Activity>(context));
-            userService = new UserService(new GenericRepository<User>(context));
+            this.appointmentService = appointmentService;
+            this.activityService = activityService;
+            this.userService = userService;
         }
     }
 }

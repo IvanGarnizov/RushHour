@@ -1,14 +1,10 @@
 ﻿namespace RushHour.App.Controllers
 {
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
 
     using AutoMapper;
-
-    using Data;
-    using Data.Repositories;
 
     using Entities;
 
@@ -22,15 +18,15 @@
     [Authorize]
     public class AppointmentController : BaseController
     {
-        public AppointmentController(RushHourContext context)
-            : base(context)
+        public AppointmentController(IAppointmentService appointmentService, IService<Activity> activityService, IService<User> userService)
+            : base(appointmentService, activityService, userService)
         {
         }
         
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            var appointments = appointmentService.Appointments();
+            var appointments = appointmentService.Get();
 
             if (!User.IsInRole("Admin"))
             {
@@ -58,8 +54,14 @@
             }
 
             string userId = User.Identity.GetUserId();
+            var appointment = new Appointment()
+            {
+                StartDateTime = model.StartDateTime,
+                EndDateTime = model.EndDateTime,
+                UserId = userId
+            };
 
-            appointmentService.Create(model, userId);
+            appointmentService.Create(appointment);
 
             return RedirectToAction("Index");
         }
@@ -82,21 +84,29 @@
                 return View();
             }
 
-            appointmentService.Update(model, id);
+            var appointment = appointmentService.Get(id);
+
+            appointment.StartDateTime = model.StartDateTime;
+            appointment.EndDateTime = model.EndDateTime;
+            appointmentService.Update(appointment);
 
             return RedirectToAction("Index");
         }
         
         public ActionResult Delete(int id)
         {
-            appointmentService.Delete(id);
+            var appointment = appointmentService.Get(id);
+
+            appointmentService.Delete(appointment);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Cancel(int id)
         {
-            appointmentService.Cancel(id);
+            var appointment = appointmentService.Get(id);
+
+            appointmentService.Cancel(appointment);
 
             return RedirectToAction("Index");
         }

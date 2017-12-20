@@ -1,13 +1,10 @@
 ﻿namespace RushHour.App.Controllers
 {
-    using System.Linq;
+    using System.Collections.Generic;
     using System.Web.Mvc;
 
-    using Data;
-    using Data.Repositories;
-
     using Entities;
-
+    
     using Models.BindingModels;
 
     using Services;
@@ -15,8 +12,8 @@
     [Authorize]
     public class ActivityController : BaseController
     {
-        public ActivityController(RushHourContext context)
-            : base(context)
+        public ActivityController(IAppointmentService appointmentService, IService<Activity> activityService, IService<User> userService)
+            : base(appointmentService, activityService, userService)
         {
         }
         
@@ -38,9 +35,15 @@
                 return View();
             }
 
-            var appointment = appointmentService.Get(appointmentId);
+            var activity = new Activity()
+            {
+                Name = model.Name,
+                Duration = model.Duration,
+                Price = model.Price,
+                AppointmentId = appointmentId
+            };
 
-            activityService.Create(model, appointment);
+            activityService.Create(activity);
 
             return RedirectToAction("Index", "Appointment");
         }
@@ -63,14 +66,21 @@
                 return View();
             }
 
-            activityService.Update(model, id);
+            var activity = activityService.Get(id);
+
+            activity.Name = model.Name;
+            activity.Duration = model.Duration;
+            activity.Price = model.Price;
+            activityService.Update(activity);
 
             return RedirectToAction("Index", "Appointment");
         }
         
         public ActionResult Delete(int id)
         {
-            activityService.Delete(id);
+            var activity = activityService.Get(id);
+
+            activityService.Delete(activity);
 
             return RedirectToAction("Index", "Appointment");
         }

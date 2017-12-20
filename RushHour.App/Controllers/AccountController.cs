@@ -18,18 +18,16 @@ using RushHour.Entities;
 namespace RushHour.App.Controllers
 {
     [Authorize]
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController(RushHourContext context)
-            : base(context)
+        public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, RushHourContext context)
-            : base(context)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -428,15 +426,6 @@ namespace RushHour.App.Controllers
             }
 
             base.Dispose(disposing);
-        }
-
-        public new ActionResult Profile()
-        {
-            string userId = User.Identity.GetUserId();
-            var user = userService.Get(userId);
-            var userModel = Mapper.Map<User, UserViewModel>(user);
-
-            return View(userModel);
         }
 
         #region Helpers

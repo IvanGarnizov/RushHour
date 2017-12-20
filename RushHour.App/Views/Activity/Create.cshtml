@@ -2,7 +2,7 @@
 @model ActivityBindingModel
 
 <h2>Create Activity</h2>
-@using (Html.BeginForm("Create", "Activity", new { id = ViewBag.AppointmentId }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "Activity", new { appointmentId = ViewBag.AppointmentId }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger" })

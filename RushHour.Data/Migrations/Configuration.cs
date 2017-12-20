@@ -62,21 +62,18 @@ namespace RushHour.Data.Migrations
                     Name = "First activity",
                     Duration = 15,
                     Price = 20,
+                    Appointment = firstAppointment
                 };
                 var secondActivity = new Activity()
                 {
                     Name = "Second activity",
                     Duration = 15,
                     Price = 14,
+                    Appointment = secondAppointment
                 };
 
                 context.Activities.Add(firstActivity);
                 context.Activities.Add(secondActivity);
-                context.SaveChanges();
-                firstAppointment.Activities.Add(firstActivity);
-                firstAppointment.Activities.Add(secondActivity);
-                secondAppointment.Activities.Add(firstActivity);
-                secondAppointment.Activities.Add(secondActivity);
                 context.SaveChanges();
             }
         }

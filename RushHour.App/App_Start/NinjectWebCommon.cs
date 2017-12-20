@@ -4,14 +4,19 @@
 namespace RushHour.App.App_Start
 {
     using System;
+    using System.Data.Entity;
     using System.Web;
-
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
+    using RushHour.App.Services;
     using RushHour.Data;
+    using RushHour.Data.Repositories;
     using RushHour.Data.UnitOfWork;
+    using RushHour.Entities;
 
     public static class NinjectWebCommon 
     {
@@ -65,6 +70,13 @@ namespace RushHour.App.App_Start
         {
             kernel.Bind<IRushHourData>().To<RushHourData>();
             kernel.Bind<IRushHourContext>().To<RushHourContext>();
-        }        
+            kernel.Bind<DbContext>().To<RushHourContext>();
+            kernel.Bind<IRepository<Appointment>>().To<GenericRepository<Appointment>>();
+            kernel.Bind<IRepository<Activity>>().To<GenericRepository<Activity>>();
+            kernel.Bind<IRepository<User>>().To<GenericRepository<User>>();
+            kernel.Bind<IAppointmentService>().To<AppointmentService>();
+            kernel.Bind<IService<Activity>>().To<ActivityService>();
+            kernel.Bind<IService<User>>().To<UserService>();
+        }
     }
 }

@@ -1,16 +1,9 @@
 ﻿namespace RushHour.App.Controllers
 {
     using System.Web.Mvc;
-
-    using Data;
     
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
-        public HomeController(RushHourContext context)
-            : base(context)
-        {
-        }
-
         public ActionResult Index()
         {
             return View();

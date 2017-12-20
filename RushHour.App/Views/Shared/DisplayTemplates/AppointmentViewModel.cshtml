@@ -15,7 +15,10 @@
         <p>No activities</p>
     }
     @Html.DisplayFor(m => m.Activities)
-    @Html.ActionLink("Create Activity", "Create", "Activity", new { id = Model.Id }, new { @class = "btn btn-success" })
+    @if (Model.Activities.Count() == 0)
+    {
+        @Html.ActionLink("Create Activity", "Create", "Activity", new { id = Model.Id }, new { @class = "btn btn-success" })
+    }
     @if (Model.UserId == User.Identity.GetUserId())
     {
         <hr />
