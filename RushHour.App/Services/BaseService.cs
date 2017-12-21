@@ -13,6 +13,8 @@
             this.repository = repository;
         }
 
+        public abstract bool OnBeforeCreate(T entity, string userId = null);
+
         public IEnumerable<T> Get()
         {
             return repository.All();
@@ -23,10 +25,24 @@
             return repository.Find(id);
         }
 
-        public virtual void Create(T entity)
+        public bool Create(T entity, string userId =  null)
         {
-            repository.Add(entity);
-            repository.SaveChanges();
+            if (!string.IsNullOrEmpty(userId) && OnBeforeCreate(entity, userId))
+            {
+                repository.Add(entity);
+                repository.SaveChanges();
+
+                return true;
+            }
+            else if (string.IsNullOrEmpty(userId))
+            {
+                repository.Add(entity);
+                repository.SaveChanges();
+
+                return true;
+            }
+
+            return false;
         }
 
         public void Update(T entity)

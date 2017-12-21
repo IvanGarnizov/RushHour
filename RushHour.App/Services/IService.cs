@@ -8,10 +8,12 @@
 
         T Get(object id);
 
-        void Create(T entity);
+        bool Create(T entity, string userId = null);
 
         void Update(T entity);
 
         void Delete(T entity);
+
+        bool OnBeforeCreate(T entity, string userId = null);
     }
 }

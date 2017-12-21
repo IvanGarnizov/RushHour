@@ -30,6 +30,7 @@
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Users", "Index", "User")</li>
+                        <li>@Html.ActionLink("Edit Appointment Overlap", "Edit", "Application")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

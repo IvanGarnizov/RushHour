@@ -1,10 +1,10 @@
 namespace RushHour.Data.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.IO;
     using System.Linq;
-
+    using System.Web.Hosting;
     using Entities;
 
     using Microsoft.AspNet.Identity;
@@ -75,6 +75,11 @@ namespace RushHour.Data.Migrations
                 context.Activities.Add(firstActivity);
                 context.Activities.Add(secondActivity);
                 context.SaveChanges();
+
+                string allowedNumberOfOverlappingAppointments = "3";
+                string root = HostingEnvironment.MapPath("~/");
+
+                File.WriteAllText(root + "applicationSettings.txt", allowedNumberOfOverlappingAppointments);
             }
         }
     }

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Web.Hosting;
     using System.Web.Mvc;
 
     using AutoMapper;
@@ -61,9 +62,18 @@
                 UserId = userId
             };
 
-            appointmentService.Create(appointment);
+            if (appointmentService.Create(appointment, userId))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                int allowedAppointments = int.Parse(System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/") + "applicationSettings.txt"));
 
-            return RedirectToAction("Index");
+                ModelState.AddModelError("", "There are already " + allowedAppointments + " parallel appointments");
+
+                return View();
+            }
         }
         
         public ActionResult Edit(int id)

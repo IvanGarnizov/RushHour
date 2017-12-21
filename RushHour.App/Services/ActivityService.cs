@@ -10,5 +10,10 @@
             : base(repository)
         {
         }
+
+        public override bool OnBeforeCreate(Activity entity, string userId)
+        {
+            return true;
+        }
     }
 }
