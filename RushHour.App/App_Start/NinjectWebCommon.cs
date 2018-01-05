@@ -6,17 +6,15 @@ namespace RushHour.App.App_Start
     using System;
     using System.Data.Entity;
     using System.Web;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
-    using RushHour.App.Services;
     using RushHour.Data;
     using RushHour.Data.Repositories;
     using RushHour.Data.UnitOfWork;
     using RushHour.Entities;
+    using RushHour.Services;
 
     public static class NinjectWebCommon 
     {

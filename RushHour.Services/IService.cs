@@ -1,4 +1,4 @@
-﻿namespace RushHour.App.Services
+﻿namespace RushHour.Services
 {
     using System.Collections.Generic;
 
