@@ -17,17 +17,17 @@
     using Services;
 
     [Authorize]
-    public class AppointmentController : BaseController
+    public class AppointmentController : BaseController<Appointment, IAppointmentService>
     {
-        public AppointmentController(IAppointmentService appointmentService, IService<Activity> activityService, IService<User> userService)
-            : base(appointmentService, activityService, userService)
+        public AppointmentController(IAppointmentService appointmentService)
+            : base(appointmentService)
         {
         }
         
         public ActionResult Index()
         {
             string userId = User.Identity.GetUserId();
-            var appointments = appointmentService.Get();
+            var appointments = service.Get();
 
             if (!User.IsInRole("Admin"))
             {
@@ -62,7 +62,7 @@
                 UserId = userId
             };
 
-            if (appointmentService.Create(appointment, userId))
+            if (service.Create(appointment, userId))
             {
                 return RedirectToAction("Index");
             }
@@ -94,29 +94,29 @@
                 return View();
             }
 
-            var appointment = appointmentService.Get(id);
+            var appointment = service.Get(id);
 
             appointment.StartDateTime = model.StartDateTime;
             appointment.EndDateTime = model.EndDateTime;
-            appointmentService.Update(appointment);
+            service.Update(appointment);
 
             return RedirectToAction("Index");
         }
         
         public ActionResult Delete(int id)
         {
-            var appointment = appointmentService.Get(id);
+            var appointment = service.Get(id);
 
-            appointmentService.Delete(appointment);
+            service.Delete(appointment);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Cancel(int id)
         {
-            var appointment = appointmentService.Get(id);
+            var appointment = service.Get(id);
 
-            appointmentService.Cancel(appointment);
+            service.Cancel(appointment);
 
             return RedirectToAction("Index");
         }

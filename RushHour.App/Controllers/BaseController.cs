@@ -1,22 +1,16 @@
 ﻿namespace RushHour.App.Controllers
 {
     using System.Web.Mvc;
-
-    using Entities;
-
+    
     using Services;
 
-    public class BaseController : Controller
+    public class BaseController<TEntity, TService> : Controller where TService : IService<TEntity>
     {
-        protected IAppointmentService appointmentService;
-        protected IService<Activity> activityService;
-        protected IService<User> userService;
+        protected TService service;
 
-        public BaseController(IAppointmentService appointmentService, IService<Activity> activityService, IService<User> userService)
+        public BaseController(TService service)
         {
-            this.appointmentService = appointmentService;
-            this.activityService = activityService;
-            this.userService = userService;
+            this.service = service;
         }
     }
 }

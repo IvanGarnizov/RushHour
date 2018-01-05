@@ -10,10 +10,10 @@
     using Services;
 
     [Authorize]
-    public class ActivityController : BaseController
+    public class ActivityController : BaseController<Activity, IService<Activity>>
     {
-        public ActivityController(IAppointmentService appointmentService, IService<Activity> activityService, IService<User> userService)
-            : base(appointmentService, activityService, userService)
+        public ActivityController(IService<Activity> activityService)
+            : base(activityService)
         {
         }
         
@@ -43,7 +43,7 @@
                 AppointmentId = appointmentId
             };
 
-            activityService.Create(activity);
+            service.Create(activity);
 
             return RedirectToAction("Index", "Appointment");
         }
@@ -66,21 +66,21 @@
                 return View();
             }
 
-            var activity = activityService.Get(id);
+            var activity = service.Get(id);
 
             activity.Name = model.Name;
             activity.Duration = model.Duration;
             activity.Price = model.Price;
-            activityService.Update(activity);
+            service.Update(activity);
 
             return RedirectToAction("Index", "Appointment");
         }
         
         public ActionResult Delete(int id)
         {
-            var activity = activityService.Get(id);
+            var activity = service.Get(id);
 
-            activityService.Delete(activity);
+            service.Delete(activity);
 
             return RedirectToAction("Index", "Appointment");
         }

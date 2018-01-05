@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RushHour.App", "RushHour.App\RushHour.App.csproj", "{1039E508-A1C3-40C3-A4AB-AEC8385ECD37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RushHour.Entities", "RushHour.Entities\RushHour.Entities.csproj", "{BC0C841F-5E5D-46D1-816F-AFBE472ED025}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RushHour.Data", "RushHour.Data\RushHour.Data.csproj", "{F9AB4CC1-E04A-4DF3-9177-B0AB8A97CBE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RushHour.Services", "RushHour.Services\RushHour.Services.csproj", "{8A92C5A2-64B0-4AB3-96FF-87D18E74813A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F9AB4CC1-E04A-4DF3-9177-B0AB8A97CBE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9AB4CC1-E04A-4DF3-9177-B0AB8A97CBE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9AB4CC1-E04A-4DF3-9177-B0AB8A97CBE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A92C5A2-64B0-4AB3-96FF-87D18E74813A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A92C5A2-64B0-4AB3-96FF-87D18E74813A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A92C5A2-64B0-4AB3-96FF-87D18E74813A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A92C5A2-64B0-4AB3-96FF-87D18E74813A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

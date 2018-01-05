@@ -15,16 +15,16 @@
     using Services;
 
     [Authorize(Roles = "Admin")]
-    public class UserController : BaseController
+    public class UserController : BaseController<User, IService<User>>
     {
-        public UserController(IAppointmentService appointmentService, IService<Activity> activityService, IService<User> userService)
-            : base(appointmentService, activityService, userService)
+        public UserController(IService<User> userService)
+            : base(userService)
         {
         }
 
         public ActionResult Index()
         {
-            var users = userService.Get();
+            var users = service.Get();
             var userModels = Mapper.Map<IEnumerable<User>, IEnumerable<UserViewModel>>(users);
 
             return View(userModels);
@@ -48,19 +48,19 @@
                 return View();
             }
 
-            var user = userService.Get(id);
+            var user = service.Get(id);
 
             user.UserName = model.Name;
-            userService.Update(user);
+            service.Update(user);
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(string id)
         {
-            var user = userService.Get(id);
+            var user = service.Get(id);
 
-            userService.Delete(user);
+            service.Delete(user);
 
             return RedirectToAction("Index");
         }
@@ -68,7 +68,7 @@
         public new ActionResult Profile()
         {
             string userId = User.Identity.GetUserId();
-            var user = userService.Get(userId);
+            var user = service.Get(userId);
             var userModel = Mapper.Map<User, UserViewModel>(user);
 
             return View(userModel);

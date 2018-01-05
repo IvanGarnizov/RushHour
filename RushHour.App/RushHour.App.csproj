@@ -230,12 +230,6 @@
     <Compile Include="Models\ViewModels\AppointmentViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ActivityService.cs" />
-    <Compile Include="Services\AppointmentService.cs" />
-    <Compile Include="Services\BaseService.cs" />
-    <Compile Include="Services\IAppointmentService.cs" />
-    <Compile Include="Services\IService.cs" />
-    <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -423,6 +417,10 @@
     <ProjectReference Include="..\RushHour.Entities\RushHour.Entities.csproj">
       <Project>{bc0c841f-5e5d-46d1-816f-afbe472ed025}</Project>
       <Name>RushHour.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RushHour.Services\RushHour.Services.csproj">
+      <Project>{8a92c5a2-64b0-4ab3-96ff-87d18e74813a}</Project>
+      <Name>RushHour.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
